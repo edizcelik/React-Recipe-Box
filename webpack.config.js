@@ -84,6 +84,7 @@ module.exports = {
       },
       {
         test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
+        exclude: [/images/],
         use: 'file-loader?name=fonts/[name].[ext]'
       },
     ]
