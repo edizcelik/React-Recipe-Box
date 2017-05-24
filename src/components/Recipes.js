@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
-
-const chefhat = require('./../images/chef-hat.svg');
-const coffee = require('./../images/coffee.svg');
+import RecipeList from './RecipeList';
 
 // custom styles for the modal
 const customStyles = {
@@ -17,8 +15,7 @@ const customStyles = {
   }
 };
 
-
-class RecipeDetail extends Component {
+class Recipes extends Component {
   constructor(props) {
     super(props);
 
@@ -29,8 +26,7 @@ class RecipeDetail extends Component {
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
-    this.editRecipe = this.editRecipe.bind(this);
-    this.deleteRecipe = this.deleteRecipe.bind(this);
+    this.createRecipe = this.createRecipe.bind(this);
   }
 
   openModal() {
@@ -50,7 +46,7 @@ class RecipeDetail extends Component {
     });
   }
 
-  editRecipe(e) {
+  createRecipe(e) {
     e.preventDefault();
     const name = this.name.value;
     const ingredients = this.ingredients.value;
@@ -64,7 +60,7 @@ class RecipeDetail extends Component {
         instructions,
       };
 
-      this.props.editRecipe(recipe);
+      this.props.addRecipe(recipe);
 
       // reset form
       this.recipeForm.reset();
@@ -76,63 +72,19 @@ class RecipeDetail extends Component {
     }
   }
 
-  deleteRecipe(e) {
-    e.preventDefault();
-
-    this.props.deleteRecipe();
-
-    // close modal
-    this.setState({
-      modalIsOpen: false,
-    });
-  }
-
   render() {
-    const recipe = this.props.selectedRecipe;
-    if (Object.keys(recipe).length === 0) {
-      return (
-        <div className="RecipeDetail">
-          <img id="chefhat" src={chefhat} alt="recipe box chef hat svg" />
-          <h1>RECIPE DETAIL</h1>
-        </div>
-      );
-    }
     return (
-      <div className="RecipeDetail">
-        <img id="chefhat" src={chefhat} alt="recipe box chef hat svg" />
-        <h1>RECIPE DETAIL</h1>
+      <div className="recipes">
+        <h1>RECIPES</h1>
 
-        <h2>{recipe.name}</h2>
-
-        <div className="ingredients">
-          <h3>Ingredients</h3>
-          <p>
-            {
-              // split into newlines
-            recipe.ingredients.split('\n')
-              .map(item => <span key={`${item}-${new Date()}`}>{item} <br /></span>)
-            }
-          </p>
-        </div>
-
-        <div className="instructions">
-          <h3>Instructions</h3>
-          <p>
-            {
-              // split into newlines
-            recipe.instructions.split('\n')
-              .map(item => <span key={`${item}-${new Date()}`}>{item} <br /></span>)
-            }
-          </p>
-        </div>
-
-        <div className="bonappetite">
-          <img id="coffee" src={coffee} alt="recipe box coffee svg" />
-          <span>BON APPETITE !</span>
-        </div>
+        <RecipeList
+          recipes={this.props.recipes}
+          selectRecipe={this.props.selectRecipe}
+          selectedRecipe={this.props.selectedRecipe}
+        />
 
         <button onClick={this.openModal}>
-          <i className="fa fa-cutlery" aria-hidden="true" />Edit Recipe
+          <i className="fa fa-plus" aria-hidden="true" /> Add Recipe
         </button>
 
         <Modal
@@ -140,10 +92,10 @@ class RecipeDetail extends Component {
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
           style={customStyles}
-          contentLabel="Edit A Recipe"
+          contentLabel="Add A Recipe"
         >
           <h2 ref={(subtitle) => { this.subtitle = subtitle; }}>
-            Edit Recipe for {recipe.name}
+            Add A Recipe
           </h2>
           <form
             ref={(input) => { this.recipeForm = input; }}
@@ -153,37 +105,38 @@ class RecipeDetail extends Component {
             <input
               type="text"
               id="recipeName"
-              defaultValue={recipe.name}
+              placeholder="Enter the recipe name"
               ref={(input) => { this.name = input; }}
             />
 
             <label htmlFor="ingredients">Ingredients</label>
             <textarea
               id="ingredients"
-              defaultValue={recipe.ingredients}
+              placeholder="Enter the needed ingredients"
               ref={(input) => { this.ingredients = input; }}
             />
 
             <label htmlFor="instructions">Instructions</label>
             <textarea
               id="instructions"
-              defaultValue={recipe.instructions}
+              placeholder="Enter instructions for the recipe"
               ref={(input) => { this.instructions = input; }}
             />
             <button id="closeBtn" onClick={this.closeModal}>Close</button>
-            <button type="submit" id="deleteBtn" onClick={this.deleteRecipe}>Delete</button>
-            <button type="submit" id="addBtn" onClick={this.editRecipe}>Edit Recipe</button>
+            <button type="submit" id="addBtn" onClick={this.createRecipe}>Add Recipe</button>
           </form>
         </Modal>
+
       </div>
     );
   }
 }
 
-RecipeDetail.propTypes = {
+Recipes.propTypes = {
+  recipes: PropTypes.object.isRequired,
   selectedRecipe: PropTypes.object.isRequired,
-  editRecipe: PropTypes.func.isRequired,
-  deleteRecipe: PropTypes.func.isRequired,
+  selectRecipe: PropTypes.func.isRequired,
+  addRecipe: PropTypes.func.isRequired,
 };
 
-export default RecipeDetail;
+export default Recipes;

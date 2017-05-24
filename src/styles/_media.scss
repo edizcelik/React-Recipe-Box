@@ -1,0 +1,18 @@
+$break-sml: 767;
+$break-medium: 1024;
+$break-large: 1449;
+
+@mixin respond-to($media) {
+  @if $media == sml-screens {
+    @media screen and (max-width: $break-sml + px) { @content; }
+  }
+  @else if $media == medium-screens {
+    @media screen and (min-width: ($break-sml + 1) + px) and (max-width: $break-medium + px) { @content; }
+  }
+  @else if $media == large-screens {
+    @media screen and (min-width: ($break-medium + 1) + px) and (max-width: $break-large + px) { @content; }
+  }
+  @else if $media == wide-screens {
+    @media screen and (min-width: ($break-large + 1) + px) { @content; }
+  }
+}

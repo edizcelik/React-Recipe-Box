@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Kalam|Open+Sans');
+@import 'media';
 
 $black: #3C3C3B;
 $gray: #767674;
@@ -174,6 +175,49 @@ button {
           margin-right: 5px;
         }
       }
+    }
+  }
+}
+
+// modal contents
+.ReactModal__Content {
+  width: 50%;
+  @include respond-to(sml-screens) {
+    width: 80%;
+  }
+  form {
+    padding: 25px;
+    margin-top: 25px;
+    & > * {
+      display: block;
+    }
+    label {
+      font-weight: bold;
+      color: $black;
+      margin-bottom: 5px;
+    }
+    input {
+      margin-bottom: 25px;
+      border: 1px solid $gray;
+      padding: 5px;
+      width: 100%;
+    }
+    textarea {
+      width: 100%;
+      resize: none;
+      border: 1px solid $gray;
+      padding: 5px;
+      margin-bottom: 25px;
+    }
+  }
+  button {
+    float: right;
+    margin: 10px;
+    &#closeBtn {
+      color: #ff3e03;
+    }
+    &#deleteBtn {
+      color: #ffaa00;
     }
   }
 }
