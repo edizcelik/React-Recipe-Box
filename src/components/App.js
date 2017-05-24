@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import RecipeList from './RecipeList';
 import RecipeDetail from './RecipeDetail';
+import Recipes from './Recipes';
 import recipes from './../sample-recipes';
 
 const recipeboxsvg = require('./../images/recipe-box.svg');
@@ -45,14 +45,7 @@ class App extends Component {
       <div className="App">
         <img src={recipeboxsvg} alt="Recipe box svg title" />
         <div className="recipeContainer">
-          <div className="recipes">
-            <h1>RECIPES</h1>
-            <RecipeList
-              recipes={this.state.recipes}
-              selectRecipe={this.selectRecipe}
-            />
-            <button><i className="fa fa-plus" aria-hidden="true" /> Add Recipe</button>
-          </div>
+          <Recipes recipes={this.state.recipes} selectRecipe={this.selectRecipe} />
           <RecipeDetail selectedRecipe={this.state.selectedRecipe} />
         </div>
       </div>
