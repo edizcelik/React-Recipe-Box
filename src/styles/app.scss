@@ -226,6 +226,7 @@ button {
       }
       .recipes {
         padding: 0 10px;
+        flex: 1;
         .RecipeList {
           width: 100%;
           margin-top: 0;
@@ -239,6 +240,7 @@ button {
         margin-left: 0;
         margin-top: 10px;
         padding: 0 35px 20px;
+        flex: 1;
         #chefhat {
           position: absolute;
           right: 25px;
