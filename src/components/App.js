@@ -2,10 +2,19 @@ import React, { Component } from 'react';
 
 import RecipeDetail from './RecipeDetail';
 import Recipes from './Recipes';
-import recipes from './../sample-recipes';
 
 const recipeboxsvg = require('./../images/recipe-box.svg');
 const greyfloral = require('./../images/greyfloral.png');
+
+let recipes = {
+  'recipe-A-Recipe': {
+    name: 'A Recipe',
+    ingredients: 'Add, edit, delete and save your recipes.',
+    instructions: '1. Delete or edit this recipe by clicking on the \'Edit Recipe\' button below.\n2. Add a new recipe by clicking on the \'+ Add Recipe\' button on the left.\n3. Your recipes will be automatically saved for your next visit.',
+  },
+};
+recipes = (localStorage.recipes) ? JSON.parse(localStorage.recipes) : recipes;
+const selectedRecipe = (recipes[Object.keys(recipes)[0]]) ? recipes[Object.keys(recipes)[0]] : {};
 
 class App extends Component {
   constructor(props) {
@@ -13,13 +22,20 @@ class App extends Component {
 
     this.state = {
       recipes,
-      selectedRecipe: recipes[Object.keys(recipes)[0]],
+      selectedRecipe,
     };
 
     this.selectRecipe = this.selectRecipe.bind(this);
     this.addRecipe = this.addRecipe.bind(this);
     this.editRecipe = this.editRecipe.bind(this);
     this.deleteRecipe = this.deleteRecipe.bind(this);
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    // we will persist data on the localStorage
+    console.log('change');
+    console.log({ nextProps, nextState });
+    localStorage.setItem('recipes', JSON.stringify(nextState.recipes));
   }
 
   selectRecipe(e) {
