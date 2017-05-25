@@ -78,7 +78,7 @@ button {
 .App {
   max-width: 1119px;
   width: 90%;
-  height: 90%;
+  max-height: 90%;
   box-shadow: 0 0 5px 5px $black;
   border-radius: 5px;
   display: flex;
@@ -88,6 +88,14 @@ button {
   img {
     padding: 20px 0;
   }
+  @include respond-to(sml-screens) {
+    padding: 5px;
+    max-height: 95%;
+    img {
+      padding: 0;
+    }
+  }
+
   .recipeContainer {
     flex: 1;
     margin-top: 50px;
@@ -185,6 +193,73 @@ button {
         bottom: 20px;
         i {
           margin-right: 5px;
+        }
+      }
+    }
+    @include respond-to(medium-screens) {
+      flex-direction: column;
+      margin-top: 0;
+      h1 {
+        font-size: 22px;
+      }
+      .recipes {
+        padding: 0 10px;
+        .RecipeList {
+          width: 100%;
+          li {
+            max-width: 80%;
+          }
+        }
+      }
+      .RecipeDetail {
+        margin-left: 0;
+        margin-top: 20px;
+      }
+    }
+    @include respond-to(sml-screens) {
+      flex-direction: column;
+      margin-top: 0;
+      h1 {
+        font-size: 18px;
+        margin: 5px 0 0;
+        text-align: center;
+      }
+      .recipes {
+        padding: 0 10px;
+        .RecipeList {
+          width: 100%;
+          margin-top: 0;
+          font-size: 12px;
+          li {
+            max-width: 90%;
+          }
+        }
+      }
+      .RecipeDetail {
+        margin-left: 0;
+        margin-top: 10px;
+        padding: 0 35px 20px;
+        #chefhat {
+          position: absolute;
+          right: 25px;
+          transform: scale(0.7) rotate(15deg);
+        }
+        .details {
+          width: 100%;
+        }
+        .bonappetite {
+          text-align: center;
+          margin-top: 20px;
+          display: flex;
+          flex-direction: column;
+          img {
+            order: 2;
+          }
+          span {
+            display: block;
+            order: 1;
+            top: 5px;
+          }
         }
       }
     }
