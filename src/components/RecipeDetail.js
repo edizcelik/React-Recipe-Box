@@ -101,34 +101,34 @@ class RecipeDetail extends Component {
       <div className="RecipeDetail">
         <img id="chefhat" src={chefhat} alt="recipe box chef hat svg" />
         <h1>RECIPE DETAIL</h1>
+        <div className="details">
+          <h2>{recipe.name}</h2>
 
-        <h2>{recipe.name}</h2>
+          <div className="ingredients">
+            <h3>Ingredients</h3>
+            <p>
+              {
+                // split into newlines
+              recipe.ingredients.split('\n')
+                .map(item => <span key={`${item}-${new Date()}`}>{item} <br /></span>)
+              }
+            </p>
+          </div>
 
-        <div className="ingredients">
-          <h3>Ingredients</h3>
-          <p>
-            {
-              // split into newlines
-            recipe.ingredients.split('\n')
-              .map(item => <span key={`${item}-${new Date()}`}>{item} <br /></span>)
-            }
-          </p>
-        </div>
-
-        <div className="instructions">
-          <h3>Instructions</h3>
-          <p>
-            {
-              // split into newlines
-            recipe.instructions.split('\n')
-              .map(item => <span key={`${item}-${new Date()}`}>{item} <br /></span>)
-            }
-          </p>
-        </div>
-
-        <div className="bonappetite">
-          <img id="coffee" src={coffee} alt="recipe box coffee svg" />
-          <span>BON APPETITE !</span>
+          <div className="instructions">
+            <h3>Instructions</h3>
+            <p>
+              {
+                // split into newlines
+              recipe.instructions.split('\n')
+                .map(item => <span key={`${item}-${new Date()}`}>{item} <br /></span>)
+              }
+            </p>
+          </div>
+          <div className="bonappetite">
+            <img id="coffee" src={coffee} alt="recipe box coffee svg" />
+            <span>BON APPETITE !</span>
+          </div>
         </div>
 
         <button onClick={this.openModal}>

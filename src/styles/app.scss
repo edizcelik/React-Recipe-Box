@@ -105,15 +105,15 @@ button {
       border: 3px solid $black;
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
-      align-items: stretch;
+      align-items: center;
       padding: 0 25px;
+      position: relative;
       .RecipeList {
         list-style: none;
         height: 70%;
         padding: 0 10px;
         overflow-y: auto;
-        margin: 20px 0;
+        margin: 20px 0 50px;
         flex: 1;
         li {
           cursor: pointer;
@@ -135,7 +135,8 @@ button {
         }
       }
       button {
-        flex: 0 1 10%;
+        position: absolute;
+        bottom: 20px;
       }
     }
     .RecipeDetail {
@@ -143,6 +144,7 @@ button {
       padding: 0 50px 20px 70px;
       margin-left: 75px;
       border: 3px solid $black;
+      overflow-y: auto;
       position: relative;
       display: flex;
       flex-direction: column;
@@ -150,17 +152,18 @@ button {
         position: absolute;
         right: 25px;
       }
+      .details {
+        overflow-y: auto;
+        margin: 50px 0 40px;
+      }
       h2 {
-        margin-top: 50px;
         max-width: 400px;
         overflow-x: auto;
-        @include respond-to(medium-screens) {
-          max-width: 275px;
-        }
       }
       .ingredients, .instructions {
         margin-top: 30px;
         max-height: 90px;
+        max-width: 90%;
         overflow-y: auto;
         h3 {
           margin-bottom: 15px;
@@ -177,21 +180,12 @@ button {
         }
       }
       button {
-        align-self: flex-end;
         position: absolute;
-        bottom: 25px;
+        right: 25px;
+        bottom: 20px;
         i {
           margin-right: 5px;
         }
-      }
-    }
-    @include respond-to(sml-screens) {
-      flex-direction: column;
-      .recipes {
-        flex: 1;
-      }
-      .RecipeDetail {
-        flex: 1;
       }
     }
   }

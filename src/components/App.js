@@ -33,8 +33,6 @@ class App extends Component {
 
   componentWillUpdate(nextProps, nextState) {
     // we will persist data on the localStorage
-    console.log('change');
-    console.log({ nextProps, nextState });
     localStorage.setItem('recipes', JSON.stringify(nextState.recipes));
   }
 
