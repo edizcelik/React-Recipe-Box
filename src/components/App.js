@@ -14,7 +14,7 @@ let recipes = {
   },
 };
 recipes = (localStorage.recipes) ? JSON.parse(localStorage.recipes) : recipes;
-const selectedRecipe = (recipes[Object.keys(recipes)[0]]) ? recipes[Object.keys(recipes)[0]] : {};
+let selectedRecipe = (recipes[Object.keys(recipes)[0]]) ? recipes[Object.keys(recipes)[0]] : {};
 
 class App extends Component {
   constructor(props) {
@@ -42,7 +42,7 @@ class App extends Component {
     // if the selected recipe doesn't have the active class
     if (!e.target.classList.contains('active')) {
       // console.log(e.target.id);
-      const selectedRecipe = this.state.recipes[e.target.id];
+      selectedRecipe = this.state.recipes[e.target.id];
       // console.log(selectedRecipe);
       // remove active class from all list items
       document
@@ -109,7 +109,7 @@ class App extends Component {
     // delete from the new object
     delete copyRecipes[`recipe-${name}`];
 
-    const selectedRecipe = (Object.keys(copyRecipes)[0]) ?
+    selectedRecipe = (Object.keys(copyRecipes)[0]) ?
       copyRecipes[Object.keys(copyRecipes)[0]] :
       {};
 
