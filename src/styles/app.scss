@@ -120,6 +120,10 @@ button {
           margin: 10px 0;
           padding: 10px 0;
           border-bottom: 1.3px solid $gray;
+          max-width: 170px;
+          margin-left: auto;
+          margin-right: auto;
+          overflow-x: auto;
           &.active {
             transition: all 0.6s;
             margin-bottom: 20px;
@@ -148,6 +152,11 @@ button {
       }
       h2 {
         margin-top: 50px;
+        max-width: 400px;
+        overflow-x: auto;
+        @include respond-to(medium-screens) {
+          max-width: 275px;
+        }
       }
       .ingredients, .instructions {
         margin-top: 30px;
@@ -174,6 +183,15 @@ button {
         i {
           margin-right: 5px;
         }
+      }
+    }
+    @include respond-to(sml-screens) {
+      flex-direction: column;
+      .recipes {
+        flex: 1;
+      }
+      .RecipeDetail {
+        flex: 1;
       }
     }
   }
