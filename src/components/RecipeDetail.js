@@ -132,7 +132,7 @@ class RecipeDetail extends Component {
         </div>
 
         <button onClick={this.openModal}>
-          <i className="fa fa-cutlery" aria-hidden="true" />Edit Recipe
+          <i className="fa fa-cutlery" aria-hidden="true" /> Edit Recipe
         </button>
 
         <Modal

@@ -1,0 +1,140 @@
+/* prefixing css properties:
+ *
+ * params:
+ *    $prefixes: list of prefixes to output
+ *
+ */
+@mixin prefix($property, $value, $prefixes: ()) { 
+  @each $prefix in $prefixes {
+    -#{$prefix}-#{$property}: $value;
+  }
+
+  #{$property}: $value;
+ }
+
+// box with some width, height and background-color
+@mixin box($width, $height, $background: null) {
+    width: $width;
+    height: $height;
+    background: $background;
+}
+
+// ... tells scss to treat $values as a list
+@mixin padding($values...) {    
+    @each $var in $values {
+        padding: #{$var};
+    }
+}
+
+// font-size, color and weight
+@mixin font-settings($size, $color, $weight: null) {
+  font-size: $size;
+  color: $color;
+  font-weight: $weight;
+}
+
+// text-fill
+@mixin text-fill-stroke($stroke-color, $fill-color: transparent, $stroke-width: 1px) {
+  -webkit-text-fill-color: $fill-color;
+  -webkit-text-stroke-color: $stroke-color;
+  -webkit-text-stroke-width: $stroke-width;
+}
+
+// box-shadow
+@mixin box-shadow($top, $left, $blur, $color, $inset: false) {
+  @if $inset {
+    -webkit-box-shadow:inset $top $left $blur $color;
+    -moz-box-shadow:inset $top $left $blur $color;
+    box-shadow:inset $top $left $blur $color;
+  } @else {
+    -webkit-box-shadow: $top $left $blur $color;
+    -moz-box-shadow: $top $left $blur $color;
+    box-shadow: $top $left $blur $color;
+  }
+}
+
+// border-radius
+@mixin border-radius($radius: 0.5em) {
+  @include prefix(border-radius, $radius, 'webkit' 'moz');
+}
+
+/* background-gradients: 
+ * 
+ * params:
+ *     $orientation: Type of gradient, either vertical, horizontal, diagonal or value in degrees degrees
+ *
+ */
+@mixin background-gradient($start-color, $end-color, $orientation) { 
+    background: $start-color;
+
+    @if $orientation == 'vertical' {
+      background: -webkit-linear-gradient(top, $start-color, $end-color);
+      background: -o-linear-gradient(top, $start-color, $end-color);
+      background: -moz-linear-gradient(top, $start-color, $end-color);
+      background: linear-gradient(to bottom, $start-color, $end-color);
+    } @else if $orientation == 'horizontal' {
+      background: -webkit-linear-gradient(left, $start-color, $end-color);
+      background: -o-linear-gradient(right, $start-color, $end-color);
+      background: -moz-linear-gradient(right, $start-color, $end-color);
+      background: linear-gradient(to right, $start-color, $end-color);
+    } @else if $orientation == 'diagonal' {
+      background: -webkit-linear-gradient(left top, $start-color, $end-color);
+      background: -o-linear-gradient(bottom right, $start-color, $end-color);
+      background: -moz-linear-gradient(bottom right, $start-color, $end-color);
+      background: linear-gradient(bottom right, $start-color, $end-color);
+    } @else {
+      background: -webkit-linear-gradient($orientation, $start-color, $end-color);
+      background: -o-linear-gradient($orientation, $start-color, $end-color);
+      background: -moz-linear-gradient($orientation, $start-color, $end-color);
+      background: linear-gradient($orientation, $start-color, $end-color);
+    }
+ }
+ // radial gradient
+ @mixin background-radial-gradient($values...) {
+    @each $var in $values {
+      background: -webkit-radial-gradient(#{$var});
+      background: -o-radial-gradient(#{$var});
+      background: -moz-radial-gradient(#{$var});
+      background: radial-gradient(#{$var});
+    }
+ }
+
+ // position
+ @mixin position($type, $top: null, $right: null, $bottom: null, $left: null) { 
+    position: $type;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+ }
+
+ // translate-x
+ @mixin translate($coord, $value) {
+    @if ($coord == 'X' or $coord == 'x') {
+      @include prefix(transform, translateX($value), 'webkit' 'ms');
+    }
+    @if ($coord == 'Y' or $coord == 'y') {
+      @include prefix(transform, translateY($value), 'webkit' 'ms');
+    }
+ }
+
+@mixin position-center() {
+  @include position(absolute, 50%, null, null, 50%);
+  @include prefix(transform, translate(-50%, -50%), 'webkit' 'ms');
+}
+
+ // transitions
+ @mixin transition-all($time: 1s, $timing-function: ease-in-out) { 
+    @include prefix(transition, all $time $timing-function, 'webkit');
+ }
+
+// keyframes
+@mixin keyframes($name) { 
+    @-webkit-keyframes #{$name} {
+        @content;
+    }
+
+    @keyframes #{$name} {
+        @content;
+    }
+}

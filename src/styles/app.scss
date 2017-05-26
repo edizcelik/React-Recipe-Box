@@ -1,9 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Kalam|Open+Sans');
-@import 'media';
 
 $black: #3C3C3B;
 $gray: #767674;
 $button: #55aaff;
+
+@import 'media';
+@import 'mixins';
+@import 'scrollbar';
 
 html {
   box-sizing: border-box;
@@ -16,57 +19,36 @@ html {
 }
 
 body {
+  @include box(100vw, null, url('/images/greyfloral.png'));
   font-family: 'Open Sans', cursive;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  color: $gray;
-  background: url('/images/greyfloral.png');
+  overflow-x: hidden;
+  @include font-settings(12px, $gray, 400);
 }
 
 #root {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-// scroll-bar styling
-::-webkit-scrollbar {
-  width: 13px;
-}
-::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
-    border-radius: 10px;
-}
- 
-::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba($button,0.8); 
+  @include box(100%, null);
+  position: relative;
+  padding: 25px 0;
 }
 
 // headers
 h1 {
-  color: $black;
-  font-size: 24px;
+  font-family: 'Kalam';
+  @include font-settings(24px, $black, 700);
 }
 h2 {
-  color: $black;
-  font-size: 20px;
-  font-weight: 700;
+  @include font-settings(20px, $black, 700);
 }
 h3 {
-  color: $black;
-  font-size: 16px;
-  font-weight: 400;
+  @include font-settings(16px, $black, 400);
 }
+
 // paragraph
 p {
-  font-size: 12px;
   font-style: italic;
 }
-// button
+
+// buttons
 button {
   border: none;
   outline: none;
@@ -76,194 +58,152 @@ button {
 }
 
 .App {
-  max-width: 1119px;
-  width: 90%;
-  max-height: 90%;
+  @include box(90%, null, #fff);
+  @include border-radius(5px);
+  margin: auto;
+  padding: 15px;
   box-shadow: 0 0 5px 5px $black;
-  border-radius: 5px;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  padding: 30px 75px 25px;
-  background: #fff;
-  img {
-    padding: 20px 0;
-  }
-  @include respond-to(sml-screens) {
-    padding: 5px;
-    max-height: 95%;
-    img {
-      padding: 0;
-    }
+  @include respond-to(large-screens) {
+    max-width: 1200px;
+    height: 90vh;
+    padding: 30px 75px 25px;
   }
 
   .recipeContainer {
-    flex: 1;
-    margin-top: 50px;
     display: flex;
+    flex-direction: column;
     h1 {
-      -webkit-text-fill-color: transparent;
-      -webkit-text-stroke-color: $black;
-      -webkit-text-stroke-width: 1px;
-      margin-top: 20px;
-      font-family: 'Kalam';
+      @include text-fill-stroke($black);
+    }
+    @include respond-to(large-screens) {
+      margin-top: 50px;
+      flex-direction: row;
+      flex: 1;
     }
     .recipes {
-      flex: 0 1 30%;
       text-align: center;
+      padding: 0 10px;
       border: 3px solid $black;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 0 25px;
-      position: relative;
       .RecipeList {
         list-style: none;
-        height: 70%;
         padding: 0 10px;
+        margin: 20px 0;
+        max-height: 120px;
         overflow-y: auto;
-        margin: 20px 0 50px;
-        flex: 1;
         li {
           cursor: pointer;
-          margin: 10px 0;
-          padding: 10px 0;
           border-bottom: 1.3px solid $gray;
-          max-width: 170px;
-          margin-left: auto;
-          margin-right: auto;
+          max-width: 90%;
+          margin: 0 auto;
           overflow-x: auto;
           &.active {
-            transition: all 0.6s;
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-            color: $black;
-            font-weight: bold;
+            @include transition-all(0.6s);
+            @include font-settings(1.1rem, $black, 700);
+            margin-bottom: 10px;
             border-bottom: 2px solid $black;
           }
         }
       }
-      button {
-        position: absolute;
-        bottom: 20px;
+      @include respond-to(large-screens) {
+        flex: 0 1 30%;
+        position: relative;
+        max-width: 300px;
+        display: flex;
+        flex-direction: column;
+        h1 {
+          margin: 15px 0 0;
+        }
+        .RecipeList {
+          flex: 1;
+          max-height: 80%;
+          li {
+            margin: 10px auto;
+            padding: 10px 0;
+            &.active {
+              margin-bottom: 20px;
+              font-size: 1.2rem;
+            }
+          }
+        }
+        button {
+          @include position(absolute, null, null, 15px, null);
+          width: 100%;
+          margin: auto;
+        }
       }
     }
+
     .RecipeDetail {
-      flex: 0 1 70%;
-      padding: 0 50px 20px 70px;
-      margin-left: 75px;
+      padding: 15px;
+      margin-top: 15px;
       border: 3px solid $black;
-      overflow-y: auto;
       position: relative;
-      display: flex;
-      flex-direction: column;
       #chefhat {
-        position: absolute;
-        right: 25px;
+        @include position(absolute, null, 25px, null, null);
       }
+
       .details {
+        margin-bottom: 20px;
         overflow-y: auto;
-        margin: 50px 0 40px;
-      }
-      h2 {
-        max-width: 400px;
-        overflow-x: auto;
-      }
-      .ingredients, .instructions {
-        margin-top: 30px;
-        max-height: 90px;
-        max-width: 90%;
-        overflow-y: auto;
-        h3 {
-          margin-bottom: 15px;
+        max-height: 300px;
+        h2 {
+          margin-top: 25px;
+          max-width: 180px;
+          overflow-x: auto;
         }
-      }
-      .bonappetite {
-        text-align: center;
-        margin-top: 40px;
-        span {
-          position: relative;
-          top: -75px;
-          font-weight: bold;
-          color: $black;
-        }
-      }
-      button {
-        position: absolute;
-        right: 25px;
-        bottom: 20px;
-        i {
-          margin-right: 5px;
-        }
-      }
-    }
-    @include respond-to(medium-screens) {
-      flex-direction: column;
-      margin-top: 0;
-      h1 {
-        font-size: 22px;
-      }
-      .recipes {
-        padding: 0 10px;
-        .RecipeList {
-          width: 100%;
-          li {
-            max-width: 80%;
+        .ingredients, .instructions {
+          margin-top: 15px;
+          h3 {
+            margin-bottom: 5px;
           }
-        }
-      }
-      .RecipeDetail {
-        margin-left: 0;
-        margin-top: 20px;
-      }
-    }
-    @include respond-to(sml-screens) {
-      flex-direction: column;
-      margin-top: 0;
-      h1 {
-        font-size: 18px;
-        margin: 5px 0 0;
-        text-align: center;
-      }
-      .recipes {
-        padding: 0 10px;
-        flex: 1;
-        .RecipeList {
-          width: 100%;
-          height: 250px;
-          margin-top: 0;
-          font-size: 12px;
-          li {
-            max-width: 90%;
-            margin-top: 0;
-          }
-        }
-      }
-      .RecipeDetail {
-        margin-left: 0;
-        margin-top: 10px;
-        padding: 0 35px 20px;
-        flex: 1;
-        #chefhat {
-          position: absolute;
-          right: 25px;
-          transform: scale(0.7) rotate(15deg);
-        }
-        .details {
-          width: 100%;
         }
         .bonappetite {
+          margin-top: 25px;
           text-align: center;
-          margin-top: 20px;
-          display: flex;
-          flex-direction: column;
-          img {
-            order: 2;
-          }
+          @include font-settings(null, $black, 700);
           span {
-            display: block;
-            order: 1;
-            top: 5px;
+            position: relative;
+            top: -55px;
           }
+        }
+      }
+
+      button {
+        display: block;
+        margin: auto;
+      }
+      @include respond-to(large-screens) {
+        flex: 0 1 70%;
+        padding: 0 0 15px;
+        margin-top: 0;
+        margin-left: 25px;
+        display: flex;
+        flex-direction: column;
+        h1 {
+          margin: 15px;
+        }
+        #chefhat {
+          @include position(absolute, 15px, 25px, null, null);
+        }
+        .details {
+          max-height: 80%;
+          height: 80%;
+          margin-left: 75px;
+          .ingredients, .instructions {
+            margin-top: 25px;
+            h3 {
+              margin-bottom: 15px;
+            }
+          }
+          .bonappetite {
+            margin-top: 65px;
+          }
+        }
+        button {
+          @include position(absolute, null, 25px, 15px, null);
         }
       }
     }
