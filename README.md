@@ -1,6 +1,6 @@
 # Recipe Box
 
-A simple application to create and store recipes. It is built with React and uses LocalStorage. The project uses the [Simple Webpack 2 Config for a React Project](https://github.com/edizcelik/React-project-simpleStarter) development environment.
+A simple application to create and store recipes. It is built with React and uses LocalStorage.
 
 ## Simple Webpack 2 Config for a React Project
 
